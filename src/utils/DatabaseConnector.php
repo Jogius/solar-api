@@ -7,14 +7,11 @@ class DatabaseConnector
 
   public function __construct()
   {
-    $dotenv = new DotEnv(__DIR__ . "/..");
-    $dotenv->load();
-
-    $host = getenv('DB_HOST');
-    $port = getenv('DB_PORT');
-    $db   = getenv('DB_DATABASE');
-    $username = getenv('DB_USERNAME');
-    $password = getenv('DB_PASSWORD');
+    $host = getenv("DB_HOST");
+    $port = getenv("DB_PORT");
+    $db   = getenv("DB_DATABASE");
+    $username = getenv("DB_USERNAME");
+    $password = getenv("DB_PASSWORD");
 
     try
     {
