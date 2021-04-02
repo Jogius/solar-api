@@ -1,5 +1,8 @@
 {
   "name": "jogius/solar-api",
   "description": "A PHP API that exposes endpoints to create and read solar yield data from a database.",
-  "license": "MIT"
+  "license": "MIT",
+  "require": {
+      "vlucas/phpdotenv": "^2.4"
+  }
 }
