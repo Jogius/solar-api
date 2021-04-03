@@ -18,10 +18,10 @@ $dbConnection = (new DatabaseConnector())->getConnection();
 $data = json_decode(file_get_contents("php://input"));
 
 if (
-  empty($data->status) ||
-  empty($data->flowtemp) ||
-  empty($data->refluxtemp) ||
-  empty($data->timestamp)
+  !isset($data->status) ||
+  !isset($data->flowtemp) ||
+  !isset($data->refluxtemp) ||
+  !isset($data->timestamp)
 )
 {
   http_response_code(400);

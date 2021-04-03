@@ -18,9 +18,9 @@ $dbConnection = (new DatabaseConnector())->getConnection();
 $data = json_decode(file_get_contents("php://input"));
 
 if (
-  empty($data->between) ||
-  empty($data->between->start) ||
-  empty($data->between->end)
+  !isset($data->between) ||
+  !isset($data->between->start) ||
+  !isset($data->between->end)
 )
 {
   http_response_code(400);

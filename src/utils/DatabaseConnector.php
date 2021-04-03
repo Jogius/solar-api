@@ -25,7 +25,7 @@ class DatabaseConnector
       $statement = "
         CREATE TABLE IF NOT EXISTS data (
           id INT NOT NULL AUTO_INCREMENT,
-          status INT NOT NULL,
+          status VARCHAR(10) NOT NULL,
           flowtemp DOUBLE(4, 2) NOT NULL,
           refluxtemp DOUBLE(4, 2) NOT NULL,
           timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
