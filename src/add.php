@@ -18,6 +18,7 @@ $dbConnection = (new DatabaseConnector())->getConnection();
 $data = json_decode(file_get_contents("php://input"));
 
 if (
+  empty($data->status) ||
   empty($data->flowtemp) ||
   empty($data->refluxtemp) ||
   empty($data->timestamp)
@@ -30,9 +31,10 @@ if (
 
 try
 {
-  $query = "INSERT INTO data(flowtemp, refluxtemp, timestamp) VALUES(:flowtemp, :refluxtemp, :timestamp);";
+  $query = "INSERT INTO data(status, flowtemp, refluxtemp, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :timestamp);";
 
   $statement = $dbConnection->prepare($query);
+  $statement->bindParam(":status", $data->status);
   $statement->bindParam(":flowtemp", $data->flowtemp);
   $statement->bindParam(":refluxtemp", $data->refluxtemp);
   $statement->bindParam(":timestamp", $data->timestamp);
