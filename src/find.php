@@ -15,7 +15,7 @@ $dotenv->load();
 // Initialize Database connection
 $dbConnection = (new DatabaseConnector())->getConnection();
 
-$query = "SELECT flowtemp, refluxtemp, timestamp FROM data ORDER BY timestamp ASC;";
+$query = "SELECT * FROM data ORDER BY timestamp ASC;";
 
 $statement = $dbConnection->query($query);
 
