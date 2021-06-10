@@ -15,20 +15,46 @@ $dotenv->load();
 // Initialize Database connection
 $dbConnection = (new DatabaseConnector())->getConnection();
 
-$query = "SELECT * FROM data ORDER BY timestamp ASC;";
-
-$statement = $dbConnection->query($query);
-
-$success = $statement->execute();
-
-if ($success)
+// Get limit from URL
+$params = array();
+parse_str($_SERVER["QUERY_STRING"], $params);
+if ($params["limit"])
 {
-  $data = $statement->fetchAll();
-
-  echo json_encode($data);
+  $limit = $params["limit"];
 }
-else
+
+try
 {
-  http_response_code(403);
-  echo json_encode(array("message" => "Internal error."));
+  if (isset($limit))
+  {
+    $query = "SELECT * FROM data ORDER BY timestamp DESC LIMIT :limit;";
+
+     $statement = $dbConnection->prepare($query);
+     $statement->bindParam(":limit", $limit, PDO::PARAM_INT);
+  }
+  else
+  {
+    $query = "SELECT * FROM data ORDER BY timestamp ASC;";
+
+    $statement = $dbConnection->query($query);
+  }
+  
+  $success = $statement->execute();
+  
+  if ($success)
+  {
+    $data = $statement->fetchAll();
+  
+    echo json_encode($data);
+  }
+  else
+  {
+    http_response_code(403);
+    echo json_encode(array("message" => "Internal error."));
+  }
+}
+catch (PDOException $e)
+{
+  http_response_code(400);
+  echo json_encode(array("message" => $e->getMessage()));
 }
