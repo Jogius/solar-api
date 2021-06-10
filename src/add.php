@@ -4,7 +4,7 @@ require "./vendor/autoload.php";
 use Dotenv\Dotenv;
 require "./utils/DatabaseConnector.php";
 
-// // Set response headers
+// Set response headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -16,6 +16,18 @@ $dotenv->load();
 $dbConnection = (new DatabaseConnector())->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
+
+$token = getenv("TOKEN");
+
+if (
+  !isset($data->token) ||
+  strcmp($data->token, $token) != 0
+)
+{
+  http_response_code(401);
+  echo json_encode(array("message" => "Invalid authorization token."));
+  return;
+}
 
 if (
   !isset($data->status) ||
