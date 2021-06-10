@@ -33,6 +33,8 @@ if (
   !isset($data->status) ||
   !isset($data->flowtemp) ||
   !isset($data->refluxtemp) ||
+  !isset($data->tank1) ||
+  !isset($data->tank2) ||
   !isset($data->timestamp)
 )
 {
@@ -43,12 +45,14 @@ if (
 
 try
 {
-  $query = "INSERT INTO data(status, flowtemp, refluxtemp, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :timestamp);";
+  $query = "INSERT INTO data(status, flowtemp, refluxtemp, tank1, tank2, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :tank1, :tank2, :timestamp);";
 
   $statement = $dbConnection->prepare($query);
   $statement->bindParam(":status", $data->status);
   $statement->bindParam(":flowtemp", $data->flowtemp);
   $statement->bindParam(":refluxtemp", $data->refluxtemp);
+  $statement->bindParam(":tank1", $data->tank1);
+  $statement->bindParam(":tank2", $data->tank2);
   $statement->bindParam(":timestamp", $data->timestamp);
 
   $success = $statement->execute();
