@@ -28,10 +28,20 @@ class DatabaseConnector
           status VARCHAR(10) NOT NULL,
           flowtemp DOUBLE(4, 2) NOT NULL,
           refluxtemp DOUBLE(4, 2) NOT NULL,
+          tank1 DOUBLE(4, 2) NOT NULL,
+          tank2 DOUBLE(4, 2) NOT NULL,
           timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
           PRIMARY KEY (id)
         ) ENGINE=INNODB;
       ";
+
+      // $statement = "
+      //   IF ((SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE (table_name = 'data') AND (table_schema = 'dbs1732604') AND (column_name = 'tank1')) > 0)
+      //   BEGIN
+      //     ALTER TABLE data
+      //     ADD tank1 DOUBLE(4, 2) DEFAULT NULL, tank2 DOUBLE(4, 2) DEFAULT NULL;
+      //   END;
+      // ";
 
       $this->dbConnection->exec($statement);
     }

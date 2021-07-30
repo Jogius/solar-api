@@ -17,15 +17,13 @@ $dbConnection = (new DatabaseConnector())->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-$token = getenv("TOKEN");
-
 if (
   !isset($data->token) ||
-  strcmp($data->token, $token) != 0
+  strcmp($data->token, getenv("TOKEN")) != 0
 )
 {
   http_response_code(401);
-  echo json_encode(array("message" => "Invalid authorization token."));
+  echo json_encode(array("message" => "Invalid token."));
   return;
 }
 
