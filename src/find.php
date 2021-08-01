@@ -15,22 +15,32 @@ $dotenv->load();
 // Initialize Database connection
 $dbConnection = (new DatabaseConnector())->getConnection();
 
-// Get limit from URL
+// Check for `from` and `to` query parameters
 $params = array();
 parse_str($_SERVER["QUERY_STRING"], $params);
-if ($params["limit"])
+if (
+  !empty($params["from"]) &&
+  !empty($params["to"])
+)
 {
-  $limit = $params["limit"];
+  $range = TRUE;
+  $from = $params["from"];
+  $to = $params["to"];
+}
+else
+{
+  $range = FALSE;
 }
 
 try
 {
-  if (isset($limit))
+  if ($range)
   {
-    $query = "SELECT * FROM data ORDER BY timestamp DESC LIMIT :limit;";
+    $query = "SELECT * FROM data WHERE timestamp BETWEEN FROM_UNIXTIME(:from) AND FROM_UNIXTIME(:to) ORDER BY timestamp DESC;";
 
-     $statement = $dbConnection->prepare($query);
-     $statement->bindParam(":limit", $limit, PDO::PARAM_INT);
+    $statement = $dbConnection->prepare($query);
+    $statement->bindParam(":from", $from);
+    $statement->bindParam(":to", $to);
   }
   else
   {
