@@ -20,8 +20,7 @@ $data = json_decode(file_get_contents("php://input"));
 if (
   empty($data->token) ||
   strcmp($data->token, getenv("TOKEN")) != 0
-)
-{
+) {
   http_response_code(401);
   echo json_encode(array("message" => "Invalid token."));
   return;
@@ -34,15 +33,13 @@ if (
   empty($data->tank1) ||
   empty($data->tank2) ||
   empty($data->timestamp)
-)
-{
+) {
   http_response_code(400);
   echo json_encode(array("message" => "Invalid request data."));
   return;
 }
 
-try
-{
+try {
   $query = "INSERT INTO data(status, flowtemp, refluxtemp, tank1, tank2, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :tank1, :tank2, :timestamp);";
 
   $statement = $dbConnection->prepare($query);
@@ -54,22 +51,15 @@ try
   $statement->bindParam(":timestamp", $data->timestamp);
 
   $success = $statement->execute();
-  
-  if ($success)
-  {
+
+  if ($success) {
     http_response_code(201);
     echo json_encode(array("message" => "Success."));
-  }
-  else
-  {
+  } else {
     http_response_code(403);
     echo json_encode(array("message" => "Internal error."));
   }
-}
-catch (PDOException $e)
-{
+} catch (PDOException $e) {
   http_response_code(400);
   echo json_encode(array("message" => $e->getmessage()));
 }
-
-
