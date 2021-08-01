@@ -18,7 +18,7 @@ $dbConnection = (new DatabaseConnector())->getConnection();
 $data = json_decode(file_get_contents("php://input"));
 
 if (
-  !isset($data->token) ||
+  empty($data->token) ||
   strcmp($data->token, getenv("TOKEN")) != 0
 )
 {
@@ -28,12 +28,12 @@ if (
 }
 
 if (
-  !isset($data->status) ||
-  !isset($data->flowtemp) ||
-  !isset($data->refluxtemp) ||
-  !isset($data->tank1) ||
-  !isset($data->tank2) ||
-  !isset($data->timestamp)
+  empty($data->status) ||
+  empty($data->flowtemp) ||
+  empty($data->refluxtemp) ||
+  empty($data->tank1) ||
+  empty($data->tank2) ||
+  empty($data->timestamp)
 )
 {
   http_response_code(400);
