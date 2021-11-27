@@ -30,6 +30,9 @@ class DatabaseConnector
           refluxtemp DOUBLE(4, 2) NOT NULL,
           tank1 DOUBLE(4, 2) NOT NULL,
           tank2 DOUBLE(4, 2) NOT NULL,
+          hflowtemp DOUBLE(4, 2) NOT NULL,
+          houtsidetemp DOUBLE(4, 2) NOT NULL,
+          hofficetemp DOUBLE(4, 2) NOT NULL,
           timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
           PRIMARY KEY (id)
         ) ENGINE=INNODB;
