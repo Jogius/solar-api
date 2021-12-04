@@ -35,6 +35,7 @@ if (
   !isset($data->hflowtemp) ||
   !isset($data->houtsidetemp) ||
   !isset($data->hofficetemp) ||
+  !isset($data->glasshousetemp) ||
   !isset($data->timestamp)
 ) {
   http_response_code(400);
@@ -43,7 +44,7 @@ if (
 }
 
 try {
-  $query = "INSERT INTO data(status, flowtemp, refluxtemp, tank1, tank2, hflowtemp, houtsidetemp, hofficetemp, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :tank1, :tank2, :hflowtemp, :houtsidetemp, :hofficetemp, :timestamp);";
+  $query = "INSERT INTO data(status, flowtemp, refluxtemp, tank1, tank2, hflowtemp, houtsidetemp, hofficetemp, glasshousetemp, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :tank1, :tank2, :hflowtemp, :houtsidetemp, :hofficetemp, :glasshousetemp, :timestamp);";
 
   $statement = $dbConnection->prepare($query);
   $statement->bindParam(":status", $data->status);
@@ -54,6 +55,7 @@ try {
   $statement->bindParam(":hflowtemp", $data->hflowtemp);
   $statement->bindParam(":houtsidetemp", $data->houtsidetemp);
   $statement->bindParam(":hofficetemp", $data->hofficetemp);
+  $statement->bindParam(":glasshousetemp", $data->glasshousetemp);
   $statement->bindParam(":timestamp", $data->timestamp);
 
   $success = $statement->execute();

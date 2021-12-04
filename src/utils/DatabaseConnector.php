@@ -25,14 +25,14 @@ class DatabaseConnector
       $statement = "
         CREATE TABLE IF NOT EXISTS data (
           id INT NOT NULL AUTO_INCREMENT,
-          status VARCHAR(10) NOT NULL,
-          flowtemp DOUBLE(4, 2) NOT NULL,
-          refluxtemp DOUBLE(4, 2) NOT NULL,
-          tank1 DOUBLE(4, 2) NOT NULL,
-          tank2 DOUBLE(4, 2) NOT NULL,
-          hflowtemp DOUBLE(4, 2) NOT NULL,
-          houtsidetemp DOUBLE(4, 2) NOT NULL,
-          hofficetemp DOUBLE(4, 2) NOT NULL,
+          status VARCHAR(10) NULL DEFAULT NULL,
+          flowtemp DOUBLE(4, 2) NULL DEFAULT NULL,
+          refluxtemp DOUBLE(4, 2) NULL DEFAULT NULL,
+          tank1 DOUBLE(4, 2) NULL DEFAULT NULL,
+          tank2 DOUBLE(4, 2) NULL DEFAULT NULL,
+          hflowtemp DOUBLE(4, 2) NULL DEFAULT NULL,
+          houtsidetemp DOUBLE(4, 2) NULL DEFAULT NULL,
+          hofficetemp DOUBLE(4, 2) NULL DEFAULT NULL,
           timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
           PRIMARY KEY (id)
         ) ENGINE=INNODB;
