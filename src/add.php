@@ -42,20 +42,31 @@ if (
   return;
 }
 
+if (!isset($data->status)) $data->status = NULL;
+if (!isset($data->flowtemp)) $data->flowtemp = NULL;
+if (!isset($data->refluxtemp)) $data->refluxtemp = NULL;
+if (!isset($data->tank1)) $data->tank1 = NULL;
+if (!isset($data->tank2)) $data->tank2 = NULL;
+if (!isset($data->hflowtemp)) $data->hflowtemp = NULL;
+if (!isset($data->houtsidetemp)) $data->houtsidetemp = NULL;
+if (!isset($data->hofficetemp)) $data->hofficetemp = NULL;
+if (!isset($data->glasshousetemp)) $data->glasshousetemp = NULL;
+if (!isset($data->timestamp)) $data->timestamp = NULL;
+
 try {
   $query = "INSERT INTO data(status, flowtemp, refluxtemp, tank1, tank2, hflowtemp, houtsidetemp, hofficetemp, glasshousetemp, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :tank1, :tank2, :hflowtemp, :houtsidetemp, :hofficetemp, :glasshousetemp, :timestamp);";
 
   $statement = $dbConnection->prepare($query);
-  $statement->bindParam(":status", $data->status ?? NULL);
-  $statement->bindParam(":flowtemp", $data->flowtemp ?? NULL);
-  $statement->bindParam(":refluxtemp", $data->refluxtemp ?? NULL);
-  $statement->bindParam(":tank1", $data->tank1 ?? NULL);
-  $statement->bindParam(":tank2", $data->tank2 ?? NULL);
-  $statement->bindParam(":hflowtemp", $data->hflowtemp ?? NULL);
-  $statement->bindParam(":houtsidetemp", $data->houtsidetemp ?? NULL);
-  $statement->bindParam(":hofficetemp", $data->hofficetemp ?? NULL);
-  $statement->bindParam(":glasshousetemp", $data->glasshousetemp ?? NULL);
-  $statement->bindParam(":timestamp", $data->timestamp ?? NULL);
+  $statement->bindParam(":status", $data->status);
+  $statement->bindParam(":flowtemp", $data->flowtemp);
+  $statement->bindParam(":refluxtemp", $data->refluxtemp);
+  $statement->bindParam(":tank1", $data->tank1);
+  $statement->bindParam(":tank2", $data->tank2);
+  $statement->bindParam(":hflowtemp", $data->hflowtemp);
+  $statement->bindParam(":houtsidetemp", $data->houtsidetemp);
+  $statement->bindParam(":hofficetemp", $data->hofficetemp);
+  $statement->bindParam(":glasshousetemp", $data->glasshousetemp);
+  $statement->bindParam(":timestamp", $data->timestamp);
 
   $success = $statement->execute();
 
