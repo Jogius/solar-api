@@ -27,16 +27,15 @@ if (
 }
 
 if (
-  !isset($data->status) ||
-  !isset($data->flowtemp) ||
-  !isset($data->refluxtemp) ||
-  !isset($data->tank1) ||
-  !isset($data->tank2) ||
-  !isset($data->hflowtemp) ||
-  !isset($data->houtsidetemp) ||
-  !isset($data->hofficetemp) ||
-  !isset($data->glasshousetemp) ||
-  !isset($data->timestamp)
+  !isset($data->status) &&
+  !isset($data->flowtemp) &&
+  !isset($data->refluxtemp) &&
+  !isset($data->tank1) &&
+  !isset($data->tank2) &&
+  !isset($data->hflowtemp) &&
+  !isset($data->houtsidetemp) &&
+  !isset($data->hofficetemp) &&
+  !isset($data->glasshousetemp)
 ) {
   http_response_code(400);
   echo json_encode(array("message" => "Invalid request data."));
@@ -47,16 +46,16 @@ try {
   $query = "INSERT INTO data(status, flowtemp, refluxtemp, tank1, tank2, hflowtemp, houtsidetemp, hofficetemp, glasshousetemp, timestamp) VALUES(:status, :flowtemp, :refluxtemp, :tank1, :tank2, :hflowtemp, :houtsidetemp, :hofficetemp, :glasshousetemp, :timestamp);";
 
   $statement = $dbConnection->prepare($query);
-  $statement->bindParam(":status", $data->status);
-  $statement->bindParam(":flowtemp", $data->flowtemp);
-  $statement->bindParam(":refluxtemp", $data->refluxtemp);
-  $statement->bindParam(":tank1", $data->tank1);
-  $statement->bindParam(":tank2", $data->tank2);
-  $statement->bindParam(":hflowtemp", $data->hflowtemp);
-  $statement->bindParam(":houtsidetemp", $data->houtsidetemp);
-  $statement->bindParam(":hofficetemp", $data->hofficetemp);
-  $statement->bindParam(":glasshousetemp", $data->glasshousetemp);
-  $statement->bindParam(":timestamp", $data->timestamp);
+  $statement->bindParam(":status", $data->status ?? NULL);
+  $statement->bindParam(":flowtemp", $data->flowtemp ?? NULL);
+  $statement->bindParam(":refluxtemp", $data->refluxtemp ?? NULL);
+  $statement->bindParam(":tank1", $data->tank1 ?? NULL);
+  $statement->bindParam(":tank2", $data->tank2 ?? NULL);
+  $statement->bindParam(":hflowtemp", $data->hflowtemp ?? NULL);
+  $statement->bindParam(":houtsidetemp", $data->houtsidetemp ?? NULL);
+  $statement->bindParam(":hofficetemp", $data->hofficetemp ?? NULL);
+  $statement->bindParam(":glasshousetemp", $data->glasshousetemp ?? NULL);
+  $statement->bindParam(":timestamp", $data->timestamp ?? NULL);
 
   $success = $statement->execute();
 
